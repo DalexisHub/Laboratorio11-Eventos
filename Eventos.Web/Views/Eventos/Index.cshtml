@@ -3,40 +3,44 @@
     ViewData["Title"] = "Eventos";
     var categorias = (List<Categoria>)ViewBag.Categorias;
     int? seleccionada = ViewBag.CategoriaId;
+    var confirmadosTotal = Model.Sum(e => e.Inscripciones.Count(i => i.Estado == "Confirmada"));
+    var cuposDisponibles = Model.Sum(e => Math.Max(0, e.Aforo - e.Inscripciones.Count(i => i.Estado == "Confirmada")));
 }
 
 <section class="hero" aria-labelledby="hero-title">
     <div class="hero-content">
-        <span class="hero-kicker"><span class="sparkle" aria-hidden="true">✳</span> TU ESPACIO PARA REUNIR PERSONAS</span>
-        <h1 id="hero-title">Cada encuentro<br /><em>empieza aquí.</em></h1>
-        <p>Organiza experiencias, consulta los cupos y mantén cada evento al día.</p>
-        <a class="btn btn-primary hero-button" asp-action="Create">Crear evento <span aria-hidden="true">↗</span></a>
+        <span class="hero-kicker"><span class="live-dot" aria-hidden="true"></span> ENCUENTRO / AGENDA DE EVENTOS</span>
+        <h1 id="hero-title">Momentos que<br /><em>merecen suceder.</em></h1>
+        <p>Todo lo que necesitas para organizar experiencias y reunir personas, en un solo lugar.</p>
+        <div class="hero-actions"><a class="btn btn-primary hero-button" asp-action="Create">Crear evento <span aria-hidden="true">↗</span></a><a href="#agenda" class="hero-secondary">Explorar agenda <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-metrics" aria-label="Resumen de la agenda">
+            <div><strong>@Model.Count.ToString("00")</strong><span>Eventos</span></div>
+            <div><strong>@confirmadosTotal.ToString("00")</strong><span>Confirmados</span></div>
+            <div><strong>@cuposDisponibles</strong><span>Cupos libres</span></div>
+        </div>
     </div>
-    <div class="hero-caption">AGENDA · PERSONAS · EXPERIENCIAS</div>
+    <div class="hero-art" role="img" aria-label="Personas reunidas en un evento iluminado al atardecer"><span class="hero-caption">Diseñado para reunir</span></div>
 </section>
 
-<div class="section-heading">
-    <div><span class="eyebrow">Explora la agenda</span><h2>Encuentros en agenda<span class="heading-dot">.</span></h2></div>
-    <span class="count-pill">@Model.Count @(Model.Count == 1 ? "evento" : "eventos")</span>
-</div>
-
-<form method="get" class="filter-bar">
-    <div>
-        <label for="categoriaId" class="form-label">Categoría</label>
-        <select id="categoriaId" name="categoriaId" class="form-select">
-            <option value="">Todas las categorías</option>
-            @foreach (var categoria in categorias)
+<section id="agenda" class="agenda-section" aria-labelledby="agenda-title">
+    <div class="agenda-toolbar">
+        <div class="section-heading"><span class="eyebrow">LA AGENDA</span><h2 id="agenda-title">Próximos encuentros <span class="count-pill">@Model.Count</span></h2></div>
+        <form method="get" class="filter-bar">
+            <label for="categoriaId">Categoría</label>
+            <select id="categoriaId" name="categoriaId" class="form-select">
+                <option value="">Todas las categorías</option>
+                @foreach (var categoria in categorias)
+                {
+                    <option value="@categoria.Id" selected="@(seleccionada == categoria.Id)">@categoria.Nombre</option>
+                }
+            </select>
+            <button class="btn btn-outline-primary" type="submit">Aplicar</button>
+            @if (seleccionada.HasValue)
             {
-                <option value="@categoria.Id" selected="@(seleccionada == categoria.Id)">@categoria.Nombre</option>
+                <a asp-action="Index" class="btn btn-link">Limpiar</a>
             }
-        </select>
+        </form>
     </div>
-    <button class="btn btn-outline-primary" type="submit">Ver eventos <span aria-hidden="true">→</span></button>
-    @if (seleccionada.HasValue)
-    {
-        <a asp-action="Index" class="btn btn-link">Limpiar</a>
-    }
-</form>
 
 @if (Model.Count == 0)
 {
@@ -67,3 +71,4 @@ else
         }
     </div>
 }
+</section>
