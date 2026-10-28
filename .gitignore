@@ -2,3 +2,11 @@
 **/obj/
 **/appsettings.Local.json
 .DS_Store
+.vs/
+.vscode/
+.idea/
+*.user
+*.log
+.env
+.env.*
+!.env.example
