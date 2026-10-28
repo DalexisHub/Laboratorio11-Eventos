@@ -1,0 +1,63 @@
+@model List<Evento>
+@{
+    ViewData["Title"] = "Eventos";
+    var categorias = (List<Categoria>)ViewBag.Categorias;
+    int? seleccionada = ViewBag.CategoriaId;
+}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">Agenda de Encuentro</span>
+        <h1>Eventos para conectar ideas.</h1>
+        <p class="lead-text">Organiza experiencias, consulta los cupos y mantén cada encuentro al día.</p>
+    </div>
+    <a class="btn btn-primary" asp-action="Create">Crear evento</a>
+</div>
+
+<form method="get" class="filter-bar">
+    <div>
+        <label for="categoriaId" class="form-label">Filtrar por categoría</label>
+        <select id="categoriaId" name="categoriaId" class="form-select">
+            <option value="">Todas las categorías</option>
+            @foreach (var categoria in categorias)
+            {
+                <option value="@categoria.Id" selected="@(seleccionada == categoria.Id)">@categoria.Nombre</option>
+            }
+        </select>
+    </div>
+    <button class="btn btn-outline-primary" type="submit">Aplicar filtro</button>
+    @if (seleccionada.HasValue)
+    {
+        <a asp-action="Index" class="btn btn-link">Limpiar</a>
+    }
+</form>
+
+@if (Model.Count == 0)
+{
+    <div class="empty">No hay eventos para esta categoría. <a asp-action="Create">Crea uno nuevo</a>.</div>
+}
+else
+{
+    <div class="event-grid">
+        @foreach (var evento in Model)
+        {
+            var confirmados = evento.Inscripciones.Count(i => i.Estado == "Confirmada");
+            <article class="event-card">
+                <span class="category">@evento.Categoria.Nombre · @evento.Modalidad</span>
+                <h2>@evento.Titulo</h2>
+                <div class="event-meta">
+                    <span>@evento.Fecha.ToString("dddd d 'de' MMMM · HH:mm", new System.Globalization.CultureInfo("es-PE"))</span>
+                    <span>@evento.Lugar</span>
+                    <span>@confirmados confirmados · @(evento.Aforo - confirmados) cupos disponibles</span>
+                </div>
+                <div class="event-footer">
+                    <div>
+                        <div class="price">@(evento.Precio == 0 ? "Gratis" : $"S/ {evento.Precio:N2}")</div>
+                        <div class="seats">Aforo: @evento.Aforo</div>
+                    </div>
+                    <a asp-action="Details" asp-route-id="@evento.Id" class="btn btn-outline-primary btn-sm">Ver detalles</a>
+                </div>
+            </article>
+        }
+    </div>
+}

@@ -1,0 +1,16 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<span class="eyebrow">Encuentro</span>
+<h1>Ocurrió un error.</h1>
+<p class="lead-text">No pudimos completar esta solicitud. Inténtalo de nuevo.</p>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Código de solicitud:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+

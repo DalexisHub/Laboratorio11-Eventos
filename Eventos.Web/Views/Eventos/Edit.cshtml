@@ -1,0 +1,4 @@
+@model EventoFormulario
+@{ ViewData["Title"] = "Editar evento"; }
+<div class="page-heading"><div><span class="eyebrow">Eventos</span><h1>Editar evento</h1><p class="lead-text">Actualiza la información del encuentro.</p></div></div>
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="form-panel"><partial name="_Formulario" model="Model" /><div class="action-row"><button class="btn btn-primary" type="submit">Guardar cambios</button><a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-link">Cancelar</a></div></form>

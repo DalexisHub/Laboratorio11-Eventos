@@ -1,0 +1,4 @@
+@model Evento
+@{ ViewData["Title"] = "Desactivar evento"; }
+<div class="page-heading"><div><span class="eyebrow">Eventos</span><h1>Desactivar evento</h1><p class="lead-text">El evento dejará de aparecer en la agenda y en nuevas inscripciones.</p></div></div>
+<div class="detail-panel"><h2 class="h4">@Model.Titulo</h2><p class="muted">@Model.Fecha.ToString("dd/MM/yyyy HH:mm") · @Model.Lugar</p><form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="action-row"><button type="submit" class="btn btn-danger">Confirmar desactivación</button><a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-link">Cancelar</a></form></div>
