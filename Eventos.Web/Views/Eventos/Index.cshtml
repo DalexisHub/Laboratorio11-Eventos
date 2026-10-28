@@ -5,21 +5,35 @@
     int? seleccionada = ViewBag.CategoriaId;
     var confirmadosTotal = Model.Sum(e => e.Inscripciones.Count(i => i.Estado == "Confirmada"));
     var cuposDisponibles = Model.Sum(e => Math.Max(0, e.Aforo - e.Inscripciones.Count(i => i.Estado == "Confirmada")));
+    var proximo = Model.Where(e => e.Fecha > DateTime.Now).OrderBy(e => e.Fecha).FirstOrDefault();
+    var cuposProximo = proximo is null ? 0 : Math.Max(0, proximo.Aforo - proximo.Inscripciones.Count(i => i.Estado == "Confirmada"));
+    var diasProximo = proximo is null ? 0 : (proximo.Fecha.Date - DateTime.Today).Days;
 }
 
-<section class="hero" aria-labelledby="hero-title">
+<section class="hero @(proximo is null ? "" : "hero-featured")" aria-labelledby="hero-title">
     <div class="hero-content">
-        <span class="hero-kicker"><span class="live-dot" aria-hidden="true"></span> ENCUENTRO / AGENDA DE EVENTOS</span>
-        <h1 id="hero-title">Momentos que<br /><em>merecen suceder.</em></h1>
-        <p>Todo lo que necesitas para organizar experiencias y reunir personas, en un solo lugar.</p>
-        <div class="hero-actions"><a class="btn btn-primary hero-button" asp-action="Create">Crear evento <span aria-hidden="true">↗</span></a><a href="#agenda" class="hero-secondary">Explorar agenda <span aria-hidden="true">↓</span></a></div>
+        @if (proximo is not null)
+        {
+            <span class="hero-kicker"><span class="live-dot" aria-hidden="true"></span> PRÓXIMO EN TU AGENDA · @proximo.Categoria.Nombre.ToUpperInvariant()</span>
+            <h1 id="hero-title" class="hero-feature-title">@proximo.Titulo</h1>
+            <p>@proximo.Fecha.ToString("dddd d 'de' MMMM · HH:mm", new System.Globalization.CultureInfo("es-PE"))<br />@proximo.Lugar · @proximo.Modalidad</p>
+            <div class="hero-next-meta"><span>@(diasProximo == 0 ? "Hoy" : diasProximo == 1 ? "Mañana" : $"En {diasProximo} días")</span><span>@cuposProximo @(cuposProximo == 1 ? "cupo libre" : "cupos libres")</span></div>
+            <div class="hero-actions"><a class="btn btn-primary hero-button" asp-action="Details" asp-route-id="@proximo.Id">Ver evento <span aria-hidden="true">↗</span></a><a asp-action="Create" class="hero-secondary">Crear otro evento <span aria-hidden="true">＋</span></a></div>
+        }
+        else
+        {
+            <span class="hero-kicker"><span class="live-dot" aria-hidden="true"></span> ENCUENTRO / AGENDA DE EVENTOS</span>
+            <h1 id="hero-title">Tu próximo encuentro<br /><em>empieza aquí.</em></h1>
+            <p>Prepara una nueva experiencia y reúne a las personas indicadas.</p>
+            <div class="hero-actions"><a class="btn btn-primary hero-button" asp-action="Create">Crear evento <span aria-hidden="true">↗</span></a><a href="#agenda" class="hero-secondary">Explorar agenda <span aria-hidden="true">↓</span></a></div>
+        }
         <div class="hero-metrics" aria-label="Resumen de la agenda">
             <div><strong>@Model.Count.ToString("00")</strong><span>Eventos</span></div>
             <div><strong>@confirmadosTotal.ToString("00")</strong><span>Confirmados</span></div>
             <div><strong>@cuposDisponibles</strong><span>Cupos libres</span></div>
         </div>
     </div>
-    <div class="hero-art" role="img" aria-label="Personas reunidas en un evento iluminado al atardecer"><span class="hero-caption">Diseñado para reunir</span></div>
+    <div class="hero-art" role="img" aria-label="Personas reunidas en un evento iluminado al atardecer"><span class="hero-caption">@(proximo is null ? "Diseñado para reunir" : "PRÓXIMO ENCUENTRO")</span></div>
 </section>
 
 <section id="agenda" class="agenda-section" aria-labelledby="agenda-title">

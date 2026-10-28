@@ -8,10 +8,12 @@ namespace Eventos.Web.Controllers;
 public class InscripcionesController(InscripcionRepositorio repositorio) : Controller
 {
     public async Task<IActionResult> Index() => View(await repositorio.ListarAsync());
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create(int? eventoId)
     {
         var modelo = new InscripcionFormulario();
         await CargarListas(modelo);
+        if (eventoId.HasValue && modelo.Eventos.Any(e => e.Value == eventoId.Value.ToString()))
+            modelo.EventoId = eventoId.Value;
         return View(modelo);
     }
     [HttpPost, ValidateAntiForgeryToken]

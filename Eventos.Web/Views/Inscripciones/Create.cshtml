@@ -10,5 +10,38 @@
         </div>
         <div class="action-row"><button type="submit" class="btn btn-primary">Confirmar inscripción</button><a asp-action="Index" class="btn btn-link">Cancelar</a></div>
     </form>
-    <aside class="editor-aside editor-aside-checkin" aria-label="Recepción e ingreso a un evento"><div><span>PARTICIPACIÓN</span><p>Una entrada abre la puerta a nuevas experiencias.</p></div></aside>
+    <aside class="pass-preview" aria-labelledby="pass-preview-title">
+        <div class="pass-preview-photo" role="img" aria-label="Recepción de un evento"></div>
+        <div class="pass-preview-body" aria-live="polite">
+            <span class="ticket-number">VISTA PREVIA · PASE</span>
+            <h2 id="pass-preview-title">Tu próximo encuentro</h2>
+            <div class="pass-preview-field"><small>EVENTO</small><strong id="preview-evento">Selecciona un evento</strong></div>
+            <div class="pass-preview-field"><small>ASISTENTE</small><strong id="preview-asistente">Selecciona un asistente</strong></div>
+            <div class="pass-preview-status" id="preview-estado">Completa los datos para confirmar</div>
+        </div>
+    </aside>
 </div>
+@section Scripts {
+    <script>
+        (() => {
+            const evento = document.getElementById('EventoId');
+            const asistente = document.getElementById('AsistenteId');
+            const pase = document.querySelector('.pass-preview');
+            const titulo = document.getElementById('preview-evento');
+            const persona = document.getElementById('preview-asistente');
+            const estado = document.getElementById('preview-estado');
+            if (!evento || !asistente || !pase || !titulo || !persona || !estado) return;
+            const actualizar = () => {
+                const tieneEvento = Number(evento.value) > 0;
+                const tieneAsistente = Number(asistente.value) > 0;
+                titulo.textContent = tieneEvento ? evento.selectedOptions[0].textContent : 'Selecciona un evento';
+                persona.textContent = tieneAsistente ? asistente.selectedOptions[0].textContent : 'Selecciona un asistente';
+                pase.classList.toggle('is-ready', tieneEvento && tieneAsistente);
+                estado.textContent = tieneEvento && tieneAsistente ? 'Listo para confirmar' : 'Completa los datos para confirmar';
+            };
+            evento.addEventListener('change', actualizar);
+            asistente.addEventListener('change', actualizar);
+            actualizar();
+        })();
+    </script>
+}

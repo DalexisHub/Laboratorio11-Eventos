@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = Model.Titulo;
     var confirmados = Model.Inscripciones.Count(i => i.Estado == "Confirmada");
+    var disponibles = Math.Max(0, Model.Aforo - confirmados);
+    var inscripcionDisponible = Model.Fecha > DateTime.Now && disponibles > 0;
     var tema = Model.Categoria.Nombre switch { "Tecnología" => "theme-tech", "Cultura" => "theme-culture", "Negocios" => "theme-business", _ => "theme-default" };
 }
 <div class="page-heading">
@@ -21,8 +23,18 @@
             <dt class="col-sm-4">Precio</dt><dd class="col-sm-8">@(Model.Precio == 0 ? "Gratis" : $"S/ {Model.Precio:N2}")</dd>
             <dt class="col-sm-4">Inscripciones</dt><dd class="col-sm-8">@confirmados confirmadas de @Model.Aforo · @(Model.Aforo - confirmados) cupos disponibles</dd>
         </dl>
+        <div class="detail-availability">
+            <div><strong>@disponibles @(disponibles == 1 ? "cupo disponible" : "cupos disponibles")</strong><span>@confirmados de @Model.Aforo inscripciones confirmadas</span></div>
+            <div class="capacity-track" role="progressbar" aria-label="Cupos ocupados" aria-valuenow="@confirmados" aria-valuemin="0" aria-valuemax="@Model.Aforo"><span style="width:@(Model.Aforo > 0 ? Math.Min(100, confirmados * 100 / Model.Aforo) : 0)%"></span></div>
+        </div>
         <div class="ticket-divider" aria-hidden="true"></div>
-        <div class="action-row"><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar evento</a><a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Desactivar</a></div>
+        <div class="action-row">
+            @if (inscripcionDisponible)
+            {
+                <a asp-controller="Inscripciones" asp-action="Create" asp-route-eventoId="@Model.Id" class="btn btn-primary">Inscribir asistente <span aria-hidden="true">↗</span></a>
+            }
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Editar evento</a><a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-link text-danger">Desactivar</a>
+        </div>
     </div>
     <aside class="editor-aside editor-aside-event" aria-label="Ambiente de un encuentro"><div><span>ENCUENTRO</span><p>Un lugar para conectar ideas y personas.</p></div></aside>
 </div>
