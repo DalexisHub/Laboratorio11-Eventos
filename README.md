@@ -40,7 +40,7 @@ Para capturar la evidencia SQL pedida en la guía, conecta la extensión SQL Ser
 SELECT MigrationId, ProductVersion FROM __EFMigrationsHistory ORDER BY MigrationId;
 ```
 
-Deben aparecer los tres identificadores que muestra `dotnet ef migrations list` y que coinciden con los nombres de los archivos de migración. Captura también la carpeta `Migrations` expandida.
+Los tres identificadores coinciden con los nombres de los archivos de migración. Las capturas listas para adjuntar están en [Evidencias](Evidencias/README.md).
 
 ## Ejecutar
 
