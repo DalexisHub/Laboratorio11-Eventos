@@ -1,5 +1,20 @@
 @model List<Inscripcion>
-@{ ViewData["Title"] = "Inscripciones"; }
+@{
+    ViewData["Title"] = "Inscripciones";
+    Inscripcion? confirmada = null;
+    if (TempData["ConfirmacionId"] is int confirmacionId)
+    {
+        confirmada = Model.FirstOrDefault(i => i.Id == confirmacionId && i.Estado == "Confirmada");
+    }
+}
+@if (confirmada is not null)
+{
+    <section class="confirmation-ticket" role="status" aria-label="Inscripción confirmada">
+        <span class="confirmation-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></span>
+        <div class="confirmation-copy"><span>INSCRIPCIÓN CONFIRMADA</span><h2>Tu lugar está reservado.</h2><p>@confirmada.Asistente.Nombres · @confirmada.Evento.Titulo</p></div>
+        <div class="confirmation-stub"><small>PASE Nº</small><strong>@confirmada.Id.ToString("D3")</strong><span>@confirmada.Evento.Fecha.ToString("dd/MM/yyyy")</span></div>
+    </section>
+}
 <section class="media-heading media-heading-checkin" aria-labelledby="inscripciones-title">
     <div class="media-heading-copy"><span class="media-kicker">PARTICIPACIÓN / ACCESO</span><h1 id="inscripciones-title">Cada lugar tiene<br />una historia.</h1><p>Controla confirmaciones y cancelaciones de cada encuentro.</p><a asp-action="Create" class="btn btn-primary">Nueva inscripción <span aria-hidden="true">↗</span></a></div>
     <div class="media-heading-art" role="img" aria-label="Entrega de una entrada en la recepción de un evento"></div>

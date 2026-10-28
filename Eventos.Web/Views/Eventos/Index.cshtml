@@ -52,8 +52,9 @@ else
         @foreach (var evento in Model)
         {
             var confirmados = evento.Inscripciones.Count(i => i.Estado == "Confirmada");
-            <article class="event-card ticket-card">
-                <div class="event-card-top"><span class="date-tile"><strong>@evento.Fecha.ToString("dd")</strong><small>@evento.Fecha.ToString("MMM", new System.Globalization.CultureInfo("es-PE")).ToUpperInvariant()</small></span><span class="category">@evento.Categoria.Nombre</span></div>
+            var tema = evento.Categoria.Nombre switch { "Tecnología" => "theme-tech", "Cultura" => "theme-culture", "Negocios" => "theme-business", _ => "theme-default" };
+            <article class="event-card ticket-card @tema">
+                <div class="event-card-top"><span class="date-tile"><strong>@evento.Fecha.ToString("dd")</strong><small>@evento.Fecha.ToString("MMM", new System.Globalization.CultureInfo("es-PE")).ToUpperInvariant()</small></span><span class="category"><span class="category-mark" aria-hidden="true"></span>@evento.Categoria.Nombre</span></div>
                 <h2>@evento.Titulo</h2>
                 <div class="event-meta">
                     <span><span class="meta-icon" aria-hidden="true">◷</span> @evento.Fecha.ToString("dddd d 'de' MMMM · HH:mm", new System.Globalization.CultureInfo("es-PE"))</span>

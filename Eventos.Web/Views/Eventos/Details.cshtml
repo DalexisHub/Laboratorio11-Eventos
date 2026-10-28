@@ -2,15 +2,16 @@
 @{
     ViewData["Title"] = Model.Titulo;
     var confirmados = Model.Inscripciones.Count(i => i.Estado == "Confirmada");
+    var tema = Model.Categoria.Nombre switch { "Tecnología" => "theme-tech", "Cultura" => "theme-culture", "Negocios" => "theme-business", _ => "theme-default" };
 }
 <div class="page-heading">
     <div><span class="eyebrow">Agenda / @Model.Categoria.Nombre</span><h1>@Model.Titulo</h1><p class="lead-text">Toda la información de este encuentro, en un solo lugar.</p></div>
     <a asp-action="Index" class="btn btn-link">← Volver a la agenda</a>
 </div>
 <div class="detail-shell">
-    <div class="detail-panel ticket-detail">
+    <div class="detail-panel ticket-detail @tema">
         <div class="ticket-detail-head">
-            <div><span class="eyebrow">PASE DEL EVENTO</span><h2>Información del encuentro</h2><span class="ticket-number">EVENTO Nº @Model.Id.ToString("D3")</span></div>
+            <div><span class="eyebrow">PASE DEL EVENTO</span><h2>Información del encuentro</h2><span class="detail-category"><span class="category-mark" aria-hidden="true"></span>@Model.Categoria.Nombre</span><span class="ticket-number">EVENTO Nº @Model.Id.ToString("D3")</span></div>
             <span class="date-tile"><strong>@Model.Fecha.ToString("dd")</strong><small>@Model.Fecha.ToString("MMM", new System.Globalization.CultureInfo("es-PE")).ToUpperInvariant()</small></span>
         </div>
         <dl class="row mb-0 mt-3">

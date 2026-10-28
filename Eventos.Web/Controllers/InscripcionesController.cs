@@ -36,12 +36,13 @@ public class InscripcionesController(InscripcionRepositorio repositorio) : Contr
             await CargarListas(modelo);
             return View(modelo);
         }
-        await repositorio.CrearAsync(new Inscripcion
+        var inscripcion = new Inscripcion
         {
             EventoId = modelo.EventoId, AsistenteId = modelo.AsistenteId,
             FechaInscripcion = DateTime.Now, Estado = "Confirmada"
-        });
-        TempData["Mensaje"] = "Inscripción confirmada.";
+        };
+        await repositorio.CrearAsync(inscripcion);
+        TempData["ConfirmacionId"] = inscripcion.Id;
         return RedirectToAction(nameof(Index));
     }
     [HttpPost, ValidateAntiForgeryToken]
