@@ -10,7 +10,7 @@
 <body>
     <header class="site-header">
         <nav class="navbar navbar-expand-md container-wide">
-            <a class="brand" asp-controller="Eventos" asp-action="Index"><span class="brand-mark">E</span> Encuentro</a>
+            <a class="brand" asp-controller="Eventos" asp-action="Index" aria-label="Encuentro, ir a eventos"><span class="brand-mark" aria-hidden="true">✳</span> encuentro<span class="brand-period">.</span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav ms-auto gap-md-2">
@@ -27,7 +27,7 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="site-footer container-wide">Encuentro · Gestión de eventos e inscripciones</footer>
+    <footer class="site-footer container-wide"><span><span class="footer-star" aria-hidden="true">✳</span> encuentro<span class="brand-period">.</span></span><span>Buenas ideas. Mejores encuentros.</span></footer>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
