@@ -51,7 +51,7 @@ dotnet ef database update
 dotnet run
 ```
 
-Abre la dirección que indique `dotnet run`. La página inicial es Eventos. Antes de arrancar, confirma que SQL Server esté iniciado y que `appsettings.Local.json` contenga la conexión válida. No es necesario volver a ejecutar `--seed-only`: la aplicación comprueba las tablas al iniciar y solo carga los datos cuando están vacías.
+Abre [http://127.0.0.1:5071](http://127.0.0.1:5071). La página inicial es Eventos. El puerto está fijado en `Properties/launchSettings.json`; si una pestaña anterior apunta a otro puerto, usa esta dirección. Antes de arrancar, confirma que SQL Server esté iniciado y que `appsettings.Local.json` contenga la conexión válida. No es necesario volver a ejecutar `--seed-only`: la aplicación comprueba las tablas al iniciar y solo carga los datos cuando están vacías.
 
 ## Comprobaciones manuales para el estudiante
 
