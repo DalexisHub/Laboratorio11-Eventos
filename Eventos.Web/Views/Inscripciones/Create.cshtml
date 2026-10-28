@@ -1,4 +1,14 @@
 @model InscripcionFormulario
 @{ ViewData["Title"] = "Nueva inscripción"; }
 <div class="page-heading"><div><span class="eyebrow">Participación</span><h1>Nueva inscripción</h1><p class="lead-text">Elige un evento futuro con cupos y una persona activa.</p></div></div>
-<form asp-action="Create" method="post" class="form-panel"><div asp-validation-summary="ModelOnly" class="text-danger"></div><div class="row g-3"><div class="col-12"><label asp-for="EventoId" class="form-label">Evento</label><select asp-for="EventoId" asp-items="Model.Eventos" class="form-select"><option value="0">Selecciona un evento</option></select><span asp-validation-for="EventoId"></span></div><div class="col-12"><label asp-for="AsistenteId" class="form-label">Asistente</label><select asp-for="AsistenteId" asp-items="Model.Asistentes" class="form-select"><option value="0">Selecciona un asistente</option></select><span asp-validation-for="AsistenteId"></span></div></div><div class="action-row"><button type="submit" class="btn btn-primary">Confirmar inscripción</button><a asp-action="Index" class="btn btn-link">Cancelar</a></div></form>
+<div class="editor-shell">
+    <form asp-action="Create" method="post" class="form-panel">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row g-3">
+            <div class="col-12"><label asp-for="EventoId" class="form-label">Evento</label><select asp-for="EventoId" asp-items="Model.Eventos" class="form-select"><option value="0">Selecciona un evento</option></select><span asp-validation-for="EventoId"></span></div>
+            <div class="col-12"><label asp-for="AsistenteId" class="form-label">Asistente</label><select asp-for="AsistenteId" asp-items="Model.Asistentes" class="form-select"><option value="0">Selecciona un asistente</option></select><span asp-validation-for="AsistenteId"></span></div>
+        </div>
+        <div class="action-row"><button type="submit" class="btn btn-primary">Confirmar inscripción</button><a asp-action="Index" class="btn btn-link">Cancelar</a></div>
+    </form>
+    <aside class="editor-aside editor-aside-checkin" aria-label="Recepción e ingreso a un evento"><div><span>PARTICIPACIÓN</span><p>Una entrada abre la puerta a nuevas experiencias.</p></div></aside>
+</div>

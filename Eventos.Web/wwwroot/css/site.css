@@ -127,11 +127,39 @@ h1, h2, h3 { font-weight: 750; letter-spacing: -.045em; }
 .empty h3 { color: var(--ink); font-size: 1.2rem; }
 .empty p { margin: 7px 0 18px; }
 
+/* Section imagery and compact editor layouts */
+.media-heading { display: grid; grid-template-columns: 52% 48%; min-height: 265px; overflow: hidden; margin-bottom: 22px; border-radius: 22px; background: #102e3a; box-shadow: 0 18px 42px rgba(15,42,54,.13); }
+.media-heading-copy { z-index: 1; align-self: center; padding: 27px 38px; color: #fff; }
+.media-kicker { color: #a4d4cd; font-size: .66rem; font-weight: 750; letter-spacing: .15em; }
+.media-heading h1 { margin: 12px 0 8px; color: #fff; font-size: clamp(2rem, 3.5vw, 3.15rem); line-height: 1.1; }
+.media-heading p { max-width: 420px; margin: 0 0 17px; color: #bbcbce; font-size: .88rem; line-height: 1.5; }
+.media-heading .btn { border-color: #fff; background: #fff; color: #12474d; box-shadow: 0 7px 20px rgba(0,0,0,.13); }
+.media-heading .btn:hover { border-color: #e7f2ef; background: #e7f2ef; color: #12474d; }
+.media-heading-art { min-height: 100%; background-size: cover; background-position: center; position: relative; }
+.media-heading-art::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #102e3a, rgba(16,46,58,.12) 35%, transparent 65%); }
+.media-heading-people .media-heading-art { background-image: url('/images/encuentro-asistentes.png'); background-position: 51% center; }
+.media-heading-checkin .media-heading-art { background-image: url('/images/encuentro-inscripciones.png'); background-position: 48% center; }
+.list-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.list-heading h2 { margin: 4px 0 0; font-size: 1.45rem; }
+.editor-shell, .detail-shell { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(270px, .8fr); align-items: stretch; gap: 16px; }
+.editor-shell .form-panel, .detail-shell .detail-panel { max-width: none; }
+.editor-aside { position: relative; display: flex; align-items: end; min-height: 290px; overflow: hidden; border-radius: 18px; background-color: #122f39; background-size: cover; background-position: center; box-shadow: var(--shadow); isolation: isolate; }
+.editor-aside::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(6,25,32,.87), rgba(6,25,32,0) 63%); }
+.editor-aside > div { padding: 24px; color: #fff; }
+.editor-aside span { color: #b6dcd2; font-size: .65rem; font-weight: 750; letter-spacing: .14em; }
+.editor-aside p { max-width: 260px; margin: 7px 0 0; font-size: 1.14rem; font-weight: 700; line-height: 1.3; letter-spacing: -.03em; }
+.editor-aside-planning { background-image: url('/images/encuentro-planificacion.png'); background-position: 49% center; }
+.editor-aside-people { background-image: url('/images/encuentro-asistentes.png'); background-position: 52% center; }
+.editor-aside-checkin { background-image: url('/images/encuentro-inscripciones.png'); background-position: 53% center; }
+.editor-aside-event { background-image: url('/images/encuentro-evening.png'); background-position: 73% center; }
+
 @media (max-width: 900px) {
   .hero { grid-template-columns: 55% 45%; }
   .hero-content { padding-left: 28px; }
   .hero h1 { font-size: clamp(2rem, 4.4vw, 2.8rem); }
   .hero-metrics > div { min-width: 88px; padding-right: 10px; margin-right: 10px; }
+  .editor-shell, .detail-shell { grid-template-columns: minmax(0, 1fr) minmax(220px, .55fr); }
+  .media-heading { grid-template-columns: 57% 43%; }
 }
 @media (max-width: 700px) {
   .container-wide { padding-inline: 16px; }
@@ -150,6 +178,13 @@ h1, h2, h3 { font-weight: 750; letter-spacing: -.045em; }
   .page-heading { align-items: start; flex-direction: column; }
   .form-panel, .detail-panel { padding: 21px; }
   .site-footer { flex-direction: column; align-items: start; gap: 3px; }
+  .media-heading { display: flex; flex-direction: column; }
+  .media-heading-copy { padding: 25px 24px; }
+  .media-heading h1 { font-size: 2.25rem; }
+  .media-heading-art { min-height: 160px; }
+  .media-heading-art::before { background: linear-gradient(0deg, rgba(7,28,37,.2), transparent 60%); }
+  .editor-shell, .detail-shell { grid-template-columns: 1fr; }
+  .editor-aside { min-height: 165px; }
 }
 @media (max-width: 390px) {
   .hero-kicker { letter-spacing: .1em; }
