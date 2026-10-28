@@ -1,4 +1,27 @@
 @model Evento
-@{ ViewData["Title"] = Model.Titulo; var confirmados = Model.Inscripciones.Count(i => i.Estado == "Confirmada"); }
-<div class="page-heading"><div><span class="eyebrow">Agenda / @Model.Categoria.Nombre</span><h1>@Model.Titulo</h1><p class="lead-text">Toda la información de este encuentro, en un solo lugar.</p></div><a asp-action="Index" class="btn btn-link">← Volver a la agenda</a></div>
-<div class="detail-shell"><div class="detail-panel"><span class="eyebrow">Ficha del evento</span><dl class="row mb-0 mt-3"><dt class="col-sm-4">Fecha y hora</dt><dd class="col-sm-8">@Model.Fecha.ToString("f", new System.Globalization.CultureInfo("es-PE"))</dd><dt class="col-sm-4">Modalidad</dt><dd class="col-sm-8">@Model.Modalidad</dd><dt class="col-sm-4">Lugar</dt><dd class="col-sm-8">@Model.Lugar</dd><dt class="col-sm-4">Precio</dt><dd class="col-sm-8">@(Model.Precio == 0 ? "Gratis" : $"S/ {Model.Precio:N2}")</dd><dt class="col-sm-4">Inscripciones</dt><dd class="col-sm-8">@confirmados confirmadas de @Model.Aforo · @(Model.Aforo - confirmados) cupos disponibles</dd></dl><div class="action-row"><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar evento</a><a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Desactivar</a></div></div><aside class="editor-aside editor-aside-event" aria-label="Ambiente de un encuentro"><div><span>ENCUENTRO</span><p>Un lugar para conectar ideas y personas.</p></div></aside></div>
+@{
+    ViewData["Title"] = Model.Titulo;
+    var confirmados = Model.Inscripciones.Count(i => i.Estado == "Confirmada");
+}
+<div class="page-heading">
+    <div><span class="eyebrow">Agenda / @Model.Categoria.Nombre</span><h1>@Model.Titulo</h1><p class="lead-text">Toda la información de este encuentro, en un solo lugar.</p></div>
+    <a asp-action="Index" class="btn btn-link">← Volver a la agenda</a>
+</div>
+<div class="detail-shell">
+    <div class="detail-panel ticket-detail">
+        <div class="ticket-detail-head">
+            <div><span class="eyebrow">PASE DEL EVENTO</span><h2>Información del encuentro</h2><span class="ticket-number">EVENTO Nº @Model.Id.ToString("D3")</span></div>
+            <span class="date-tile"><strong>@Model.Fecha.ToString("dd")</strong><small>@Model.Fecha.ToString("MMM", new System.Globalization.CultureInfo("es-PE")).ToUpperInvariant()</small></span>
+        </div>
+        <dl class="row mb-0 mt-3">
+            <dt class="col-sm-4">Fecha y hora</dt><dd class="col-sm-8">@Model.Fecha.ToString("f", new System.Globalization.CultureInfo("es-PE"))</dd>
+            <dt class="col-sm-4">Modalidad</dt><dd class="col-sm-8">@Model.Modalidad</dd>
+            <dt class="col-sm-4">Lugar</dt><dd class="col-sm-8">@Model.Lugar</dd>
+            <dt class="col-sm-4">Precio</dt><dd class="col-sm-8">@(Model.Precio == 0 ? "Gratis" : $"S/ {Model.Precio:N2}")</dd>
+            <dt class="col-sm-4">Inscripciones</dt><dd class="col-sm-8">@confirmados confirmadas de @Model.Aforo · @(Model.Aforo - confirmados) cupos disponibles</dd>
+        </dl>
+        <div class="ticket-divider" aria-hidden="true"></div>
+        <div class="action-row"><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar evento</a><a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Desactivar</a></div>
+    </div>
+    <aside class="editor-aside editor-aside-event" aria-label="Ambiente de un encuentro"><div><span>ENCUENTRO</span><p>Un lugar para conectar ideas y personas.</p></div></aside>
+</div>

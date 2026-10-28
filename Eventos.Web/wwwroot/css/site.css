@@ -153,6 +153,42 @@ h1, h2, h3 { font-weight: 750; letter-spacing: -.045em; }
 .editor-aside-checkin { background-image: url('/images/encuentro-inscripciones.png'); background-position: 53% center; }
 .editor-aside-event { background-image: url('/images/encuentro-evening.png'); background-position: 73% center; }
 
+/* Ticket treatment for events, event details and registrations */
+.ticket-card { border-color: #d9e2e2; background: linear-gradient(180deg, #fff 0%, #fff 76%, #fbfdfc 100%); }
+.ticket-card .date-tile { width: 55px; height: 55px; border: 1px solid #d3e5e1; background: #eff7f5; }
+.ticket-card .event-footer { margin-top: 0; padding-top: 13px; border-top: 0; }
+.ticket-card .card-link { display: inline-flex; align-items: center; gap: 7px; }
+.ticket-card .card-link span { display: grid; place-items: center; width: 27px; height: 27px; margin-left: 0; border-radius: 50%; background: #e6f1ef; color: var(--brand-dark); }
+.ticket-divider { position: relative; border-top: 1px dashed #a9c2bf; }
+.ticket-divider::before, .ticket-divider::after { content: ""; position: absolute; top: -10px; width: 20px; height: 20px; border-radius: 50%; background: var(--canvas); }
+.ticket-divider::before { left: -10px; }
+.ticket-divider::after { right: -10px; }
+.ticket-card .ticket-divider { margin: 16px -20px 0; }
+.ticket-detail { overflow: hidden; }
+.ticket-detail::before { display: none; }
+.ticket-detail-head { display: flex; align-items: start; justify-content: space-between; gap: 16px; padding-bottom: 12px; }
+.ticket-detail-head h2 { margin: 6px 0 4px; font-size: 1.4rem; }
+.ticket-detail-head .date-tile { flex: none; width: 66px; height: 66px; }
+.ticket-detail-head .date-tile strong { font-size: 1.55rem; }
+.ticket-number { color: #7a9194; font-size: .68rem; font-weight: 750; letter-spacing: .12em; }
+.ticket-detail .ticket-divider { margin: 18px -28px 0; }
+.ticket-detail .action-row { margin-top: 17px; padding-top: 0; border-top: 0; }
+.registration-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 15px; }
+.registration-ticket { overflow: hidden; border: 1px solid #d9e2e2; border-radius: 18px; background: #fff; box-shadow: var(--shadow); }
+.registration-main { padding: 20px 21px 19px; }
+.registration-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.registration-ticket h3 { min-height: 2.5em; margin: 19px 0 16px; font-size: 1.2rem; line-height: 1.25; }
+.registration-person { display: flex; flex-direction: column; gap: 3px; }
+.registration-person span, .registration-stub small { color: #829397; font-size: .64rem; font-weight: 750; letter-spacing: .11em; }
+.registration-person strong { color: var(--ink); font-size: .87rem; font-weight: 650; }
+.registration-stub { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 16px 21px 18px; background: #fcfdfc; }
+.registration-stub > div { display: flex; flex-direction: column; gap: 3px; }
+.registration-stub > div span { color: var(--muted); font-size: .79rem; font-variant-numeric: tabular-nums; }
+.registration-stub .btn { padding: 7px 10px; font-size: .74rem; white-space: nowrap; }
+.registration-note { color: var(--muted); font-size: .75rem; }
+.registration-ticket-cancelled { opacity: .78; }
+.registration-ticket-cancelled .registration-stub { background: #f7f8f8; }
+
 @media (max-width: 900px) {
   .hero { grid-template-columns: 55% 45%; }
   .hero-content { padding-left: 28px; }
@@ -185,6 +221,7 @@ h1, h2, h3 { font-weight: 750; letter-spacing: -.045em; }
   .media-heading-art::before { background: linear-gradient(0deg, rgba(7,28,37,.2), transparent 60%); }
   .editor-shell, .detail-shell { grid-template-columns: 1fr; }
   .editor-aside { min-height: 165px; }
+  .ticket-detail .ticket-divider { margin-inline: -21px; }
 }
 @media (max-width: 390px) {
   .hero-kicker { letter-spacing: .1em; }
@@ -192,6 +229,8 @@ h1, h2, h3 { font-weight: 750; letter-spacing: -.045em; }
   .hero-metrics > div { min-width: 0; flex: 1; }
   .filter-bar label { width: 100%; }
   .filter-bar .form-select { width: 100%; }
+  .registration-grid { grid-template-columns: 1fr; }
+  .registration-stub { align-items: start; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

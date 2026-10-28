@@ -52,7 +52,7 @@ else
         @foreach (var evento in Model)
         {
             var confirmados = evento.Inscripciones.Count(i => i.Estado == "Confirmada");
-            <article class="event-card">
+            <article class="event-card ticket-card">
                 <div class="event-card-top"><span class="date-tile"><strong>@evento.Fecha.ToString("dd")</strong><small>@evento.Fecha.ToString("MMM", new System.Globalization.CultureInfo("es-PE")).ToUpperInvariant()</small></span><span class="category">@evento.Categoria.Nombre</span></div>
                 <h2>@evento.Titulo</h2>
                 <div class="event-meta">
@@ -60,6 +60,7 @@ else
                     <span><span class="meta-icon" aria-hidden="true">⌖</span> @evento.Lugar · @evento.Modalidad</span>
                 </div>
                 <div class="capacity"><div class="capacity-label"><span>@confirmados confirmados</span><span>@(evento.Aforo - confirmados) disponibles</span></div><div class="capacity-track"><span style="width:@(evento.Aforo > 0 ? Math.Min(100, confirmados * 100 / evento.Aforo) : 0)%"></span></div></div>
+                <div class="ticket-divider" aria-hidden="true"></div>
                 <div class="event-footer">
                     <div>
                         <div class="price">@(evento.Precio == 0 ? "Gratis" : $"S/ {evento.Precio:N2}")</div>
